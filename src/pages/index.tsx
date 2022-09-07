@@ -10,26 +10,26 @@ const HomeContents = () => {
 
   useEffect(() => {
     if (data) {
-      router.push('/dashboard');
+      router.push("/dashboard");
     }
-  }, [data]);
+  });
+
   return (
     <div className="flex grow flex-col items-center justify-center">
       <div className="text-2xl font-bold">Please log in below</div>
       <div className="p-4" />
       <button
         onClick={() => signIn("google")}
-        className="flex items-center gap-2 rounded bg-gray-200 px-4 py-2 text-2xl text-black" >
+        className="flex items-center gap-2 rounded bg-gray-200 px-4 py-2 text-2xl text-black"
+      >
         <span>Sign in with Google</span>
         {/* <FaGoogle /> */}
       </button>
     </div>
-  )
-
-}
+  );
+};
 
 const Home: NextPage = () => {
-
   return (
     <>
       <Head>
@@ -40,10 +40,8 @@ const Home: NextPage = () => {
       <main className="container mx-auto flex flex-col items-center justify-center min-h-screen p-4 bg-gray-800">
         <HomeContents />
       </main>
-
     </>
   );
 };
-
 
 export default Home;

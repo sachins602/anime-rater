@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-    provider = "sqlite"
+    provider = "mysql"
     // NOTE: When using postgresql, mysql or sqlserver, uncomment the @db.text annotations in model Account below
     // Further reading: 
     // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
@@ -14,8 +14,21 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Example {
+model Animes {
     id String @id @default(cuid())
+    synopsis String
+    description String
+    title_en String
+    title_en_jp String
+    average_rating String
+    popularity_rank Int
+    rating_rank Int
+    age_rating String
+    age_rating_guide String
+    status String
+    poster_image String
+    episode_count Int
+    subtype String
 }
 
 // Necessary for Next auth

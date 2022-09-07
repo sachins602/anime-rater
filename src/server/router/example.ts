@@ -14,8 +14,17 @@ export const exampleRouter = createRouter()
       };
     },
   })
-  .query("getAll", {
-    async resolve({ ctx }) {
-      return await ctx.prisma.example.findMany();
+  .query("getAnimeById", {
+    input: z
+      .object({
+        id: z.string().nullish(),
+      })
+      .nullish(),
+    resolve({ ctx, input }) {
+      return ctx.prisma.animes.findFirst({
+        where: {
+          id: input?.id || "",
+        },
+      });
     },
   });

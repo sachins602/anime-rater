@@ -16,7 +16,7 @@ export default defineNextConfig({
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ["localhost", "lh3.googleusercontent.com"],
+    domains: ["localhost", "lh3.googleusercontent.com", "media.kitsu.io"],
     minimumCacheTTL: 6000000,
   },
 });

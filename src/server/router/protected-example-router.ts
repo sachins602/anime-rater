@@ -20,8 +20,8 @@ export const protectedExampleRouter = createProtectedRouter()
       };
     },
   })
-  .query("getAll", {
+  .query("getMany", {
     async resolve({ ctx }) {
-      return await ctx.prisma.example.findMany();
+      return await ctx.prisma.animes.findMany({ take: 20 });
     },
   });
