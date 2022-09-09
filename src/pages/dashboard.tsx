@@ -7,13 +7,22 @@ import { trpc } from "../utils/trpc";
 
 const Dashboard: NextPage = () => {
   const [pageNumber, setPageNumber] = React.useState(0);
-  const { data } = useSession();
-  // UseTRPCMutationOptions<{ page?: number | undefined; },
+  const [animeStateData, setAnimeStateData] = React.useState<any[]>();
+  const defaultAnimeData = trpc.useQuery(["auth.getDefaultAnime"]);
   const animeData = trpc.useMutation(["auth.getMany"]);
+
+  const { data } = useSession();
   if (!data) return <div>Unauthorized</div>;
+
   const handleNext = () => {
     setPageNumber(pageNumber + 8);
     animeData.mutate({ page: pageNumber });
+    setAnimeStateData(animeData.data);
+  };
+  const handlePrevious = () => {
+    setPageNumber(pageNumber - 8);
+    animeData.mutate({ page: pageNumber });
+    setAnimeStateData(animeData.data);
   };
 
   return (
@@ -32,16 +41,32 @@ const Dashboard: NextPage = () => {
         <div className="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
           <h2 className="sr-only">Products</h2>
           <div className="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 text-white">
-            {animeData?.data?.map((product) => (
-              <ImageCard
-                key={product.id}
-                id={product.id}
-                title={product.title_en_jp}
-                image={product.poster_image}
-                subtype={product.subtype}
-              />
-            ))}
-            <button>previous</button>
+            {pageNumber === 0 ? (
+              <>
+                {defaultAnimeData?.data?.map((product) => (
+                  <ImageCard
+                    key={product.id}
+                    id={product.id}
+                    title={product.title_en_jp}
+                    image={product.poster_image}
+                    subtype={product.subtype}
+                  />
+                ))}
+              </>
+            ) : (
+              <>
+                {animeStateData?.map((product) => (
+                  <ImageCard
+                    key={product.id}
+                    id={product.id}
+                    title={product.title_en_jp}
+                    image={product.poster_image}
+                    subtype={product.subtype}
+                  />
+                ))}
+              </>
+            )}
+            <button onClick={handlePrevious}>previous</button>
             <button onClick={handleNext}>Next</button>
           </div>
         </div>

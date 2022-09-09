@@ -20,6 +20,15 @@ export const protectedExampleRouter = createProtectedRouter()
       };
     },
   })
+  .query("getDefaultAnime", {
+    resolve({ ctx }) {
+      return ctx.prisma.animes.findMany({
+        skip: 0,
+        take: 8,
+        orderBy: { popularity_rank: "desc" },
+      });
+    },
+  })
   .mutation("getMany", {
     input: z.object({
       page: z.number().default(0),
