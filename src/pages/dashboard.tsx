@@ -1,15 +1,20 @@
 import { NextPage } from "next";
 import { useSession } from "next-auth/react";
+import React from "react";
 import ImageCard from "../components/ImageCard";
 import ProfileCard from "../components/ProfileCard";
 import { trpc } from "../utils/trpc";
 
 const Dashboard: NextPage = () => {
+  const [pageNumber, setPageNumber] = React.useState(0);
   const { data } = useSession();
-  const animeData = trpc.useQuery(["auth.getMany"]);
-
+  // UseTRPCMutationOptions<{ page?: number | undefined; },
+  const animeData = trpc.useMutation(["auth.getMany"]);
   if (!data) return <div>Unauthorized</div>;
-  console.log(animeData);
+  const handleNext = () => {
+    setPageNumber(pageNumber + 8);
+    animeData.mutate({ page: pageNumber });
+  };
 
   return (
     <div className="bg-gray-800 w-screen">
@@ -36,6 +41,8 @@ const Dashboard: NextPage = () => {
                 subtype={product.subtype}
               />
             ))}
+            <button>previous</button>
+            <button onClick={handleNext}>Next</button>
           </div>
         </div>
       </div>

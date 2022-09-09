@@ -20,8 +20,15 @@ export const protectedExampleRouter = createProtectedRouter()
       };
     },
   })
-  .query("getMany", {
-    async resolve({ ctx }) {
-      return await ctx.prisma.animes.findMany({ take: 20 });
+  .mutation("getMany", {
+    input: z.object({
+      page: z.number().default(0),
+    }),
+    async resolve({ ctx, input }) {
+      return await ctx.prisma.animes.findMany({
+        skip: input.page,
+        take: 8,
+        orderBy: { popularity_rank: "desc" },
+      });
     },
   });
