@@ -13,16 +13,20 @@ const Dashboard: NextPage = () => {
 
   const { data } = useSession();
   if (!data) return <div>Unauthorized</div>;
-
   const handleNext = () => {
-    setPageNumber(pageNumber + 8);
-    animeData.mutate({ page: pageNumber });
-    setAnimeStateData(animeData.data);
+    const pageCounter = pageNumber + 8;
+    animeData.mutateAsync({ page: pageCounter }).then((data) => {
+      setAnimeStateData(data);
+    });
+    setPageNumber(pageCounter);
+    console.log(pageNumber);
   };
   const handlePrevious = () => {
+    if (pageNumber === 0) return;
     setPageNumber(pageNumber - 8);
-    animeData.mutate({ page: pageNumber });
-    setAnimeStateData(animeData.data);
+    animeData.mutateAsync({ page: pageNumber }).then((data) => {
+      setAnimeStateData(data);
+    });
   };
 
   return (

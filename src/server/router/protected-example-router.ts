@@ -31,7 +31,7 @@ export const protectedExampleRouter = createProtectedRouter()
   })
   .mutation("getMany", {
     input: z.object({
-      page: z.number().default(0),
+      page: z.number().default(8),
     }),
     async resolve({ ctx, input }) {
       return await ctx.prisma.animes.findMany({
