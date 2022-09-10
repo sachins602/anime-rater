@@ -1,6 +1,7 @@
 import { NextPage } from "next";
 import { useSession } from "next-auth/react";
 import React from "react";
+import Button from "../components/Button";
 import ImageCard from "../components/ImageCard";
 import ProfileCard from "../components/ProfileCard";
 import { trpc } from "../utils/trpc";
@@ -70,8 +71,8 @@ const Dashboard: NextPage = () => {
                 ))}
               </>
             )}
-            <button onClick={handlePrevious}>previous</button>
-            <button onClick={handleNext}>Next</button>
+            <Button name="Previous" onClick={handlePrevious} />
+            <Button name="Next" onClick={handleNext} />
           </div>
         </div>
       </div>

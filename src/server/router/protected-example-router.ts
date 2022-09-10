@@ -25,7 +25,7 @@ export const protectedExampleRouter = createProtectedRouter()
       return ctx.prisma.animes.findMany({
         skip: 0,
         take: 8,
-        orderBy: { popularity_rank: "desc" },
+        orderBy: { popularity_rank: "asc" },
       });
     },
   })
@@ -37,7 +37,7 @@ export const protectedExampleRouter = createProtectedRouter()
       return await ctx.prisma.animes.findMany({
         skip: input.page,
         take: 8,
-        orderBy: { popularity_rank: "desc" },
+        orderBy: { popularity_rank: "asc" },
       });
     },
   });
