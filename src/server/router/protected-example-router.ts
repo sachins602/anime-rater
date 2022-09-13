@@ -40,4 +40,29 @@ export const protectedExampleRouter = createProtectedRouter()
         orderBy: { popularity_rank: "asc" },
       });
     },
+  })
+  .mutation("likeAnime", {
+    input: z.object({
+      animeId: z.string(),
+    }),
+    async resolve({ ctx, input }) {
+      return await ctx.prisma.userAnime.create({
+        data: {
+          animeId: input.animeId,
+          userId: ctx.session.user.id,
+        },
+      });
+    },
+  })
+  .query("getLikedAnime", {
+    async resolve({ ctx }) {
+      return await ctx.prisma.userAnime.findMany({
+        where: {
+          userId: ctx.session.user.id,
+        },
+        include: {
+          anime: true,
+        },
+      });
+    },
   });

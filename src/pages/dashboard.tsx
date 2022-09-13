@@ -1,5 +1,6 @@
 import { NextPage } from "next";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 import React from "react";
 import Button from "../components/Button";
 import ImageCard from "../components/ImageCard";
@@ -33,12 +34,17 @@ const Dashboard: NextPage = () => {
   return (
     <div className="bg-gray-800 w-screen">
       <div className="container mx-auto flex flex-row items-center justify-center min-h-screen p-4">
-        <div className="absolute top-2 right-2 h-16 w-32">
+        <div className="absolute top-2 right-2">
           {data ? (
-            <ProfileCard
-              username={data?.user?.name}
-              image={data?.user?.image}
-            />
+            <div className="flex flex-row">
+              <Link href={"liked"}>
+                <Button name="Favorites" />
+              </Link>
+              <ProfileCard
+                username={data?.user?.name}
+                image={data?.user?.image}
+              />
+            </div>
           ) : (
             <div>Loading...</div>
           )}

@@ -29,8 +29,18 @@ model Animes {
     poster_image String
     episode_count Int
     subtype String
+    userAnime UserAnime[]
 }
 
+model UserAnime{
+    id String @id @default(cuid())
+    user User @relation(fields: [userId], references: [id])
+    userId String
+    anime Animes @relation(fields: [animeId], references: [id])
+    animeId String
+
+    @@unique([userId, animeId])
+}
 // Necessary for Next auth
 model Account {
     id                String  @id @default(cuid())
@@ -66,6 +76,7 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
+    userAnime UserAnime[]
 }
 
 model VerificationToken {
