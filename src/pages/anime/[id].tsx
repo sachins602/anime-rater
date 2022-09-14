@@ -19,7 +19,7 @@ const AnimePage: NextPage = () => {
       .mutateAsync({
         animeId: choosenAnimeId,
       })
-      .catch((err) => {
+      .catch(() => {
         window.alert("You already liked this anime");
       });
   };
